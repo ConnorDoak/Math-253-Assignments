@@ -2,9 +2,27 @@
 
 Your work goes here ...
 
+Connor Doak
 
 
 ## Test statements
+Task 1
+#```{r}
+#download.file("http://www-bcf.usc.edu/~gareth/ISL/Auto.csv", destfile="Auto.csv")
+#```
+Task 2
+
+```{r}
+auto_file_name <- "/home/local/MAC/jdoak/Math-253-Assignments-Git/Auto.csv"
+Auto=read.csv("/home/local/MAC/jdoak/Math-253-Assignments-Git/Auto.csv")
+
+```
+task 3
+```{r}
+
+
+summary(Auto$horsepower)
+```
 
 ```{r}
 scoreActivity::score253(2)
