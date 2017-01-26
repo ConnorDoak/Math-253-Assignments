@@ -3,6 +3,9 @@
 Your work goes here ...
 
 Content
+```{r}
+library("mosaicData", lib.loc="~/R/library")
+```
 
 ## Test statements
 
