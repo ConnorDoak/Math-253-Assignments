@@ -2,9 +2,21 @@
 
 Your work goes here ...
 
-
+Connor Doak
 
 ## Test statements
+
+```{r}
+
+data(College, package = "ISLR")
+
+#Task 2
+yield <- College["Enroll"]/College["Accept"]
+
+#Task 3
+all_indices <-1:nrow(College)
+```
+
 
 ```{r}
 scoreActivity::score253(3)
