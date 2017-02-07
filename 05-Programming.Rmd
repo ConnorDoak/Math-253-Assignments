@@ -5,6 +5,23 @@ Your work goes here ...
 
 
 ## Test statements
+Task 1
+```{r}
+library("mosaicData", lib.loc="~/R/library")
+installed.packages("mosaicData")
+nbins <- 10
+```
+
+task 2
+```{r}
+evenly_spaced <- c(min(Galton$height), max(Galton$height), nbins +1)
+
+```
+task 3
+```{r}
+bin_counts <- 
+```
+
 
 ```{r}
 scoreActivity::score253(5)
