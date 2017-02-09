@@ -1,2 +1,164 @@
 # Topic 1 Exercises
 
+Connor Doak
+Topic 1 Rmd
+
+2.4.1
+a) Flexible model will perform better. We are less likely to overfit since we have a large N. The additional flexibility is also able to decrease bias
+
+b) Inflexible model will perform better. The small n would force us to overfit if we were to use a flexible model
+
+c) Flexible model because we want to be able to see the nonlinear effects. These effects would be hidden in an inflexible model
+
+d) Inflexible model because we would be capturing too much of the variance in the data with a flexible model
+
+2.4.2
+a) Classification because we are interested in finding which factors effect CEO salary. N is 500 (firms) and p is 4
+
+b) Classification because we are interested in finding whether or not will either succeed or fail. N is 20, P is 14
+
+c) Regression because we are looking to find a percent change. N is 52, p is 4
+
+2.4.3
+a) I could not figure out how to draw the plots in R
+
+b) Typical squared bias - The squared bias will decrease as flexbility increases n a logistic way. The additional flexibility will reduce the errors. 
+
+variance - follows the training error and testing error at first, but then splits the difference between training and testing error
+
+training error - starts as a parabola, but as flexibiltiy increases training MSE will decreases
+
+test error - starts as a parabola, but as flexibility increases, testing MSE will increases
+
+bayes (irreducible) error - is the difference between the error and variance, so it will always be between the two other functions 
+
+2.4.6
+Parametric approaches assumes that the sample is taken from a population that follows some probability density function. A non-parametric set has parameters that are not constant and can increase or decrease with new information. If assumptions are correct/accurate the parametric approach can have very close estimates, but if the assumptions are incorrect, the precision of the model could suffer greatly. Parametric approaches are also more common, and easier to write down and teach. 
+
+2.4.7
+a) Observation 1 has a distance of Sqrt(9)
+Observation 2 has a distance of sqrt (4)
+Observation has a distance of sqrt (10)
+observaation 4 has a distance of sqrt(5)
+observation 5 has a distance of sqrt (2)
+observation 6 has a distance of sqrt (3)
+
+b) We expect the color to be green. Since we are looking for the closest color when it k = 1 the closest color is green
+
+c) We expect the color to be red. Since we are looking for the closest color when k = 3, the closest color is red. 
+
+d) We would expect it to be small because using the high could cause us to over fit the data. 
+
+2.4.8
+```{r}
+college = read.csv("College.csv", header = T, na.strings = "?")
+#b
+rownames(college) = college[,1]
+
+#c
+summary(college)
+A = matrix(college)
+pairs(college, A[1:10])
+plot(college$Outstate)
+plot(college$Private)
+
+```
+```{r}
+Elite = rep("No", nrow(college))
+Elite[college$Top10perc > 50] = "Yes"
+Elite = as.factor(Elite)
+college = data.frame(college, Elite)
+summary(Elite)
+plot(college$Outstate, Elite)
+```
+```{r}
+hist(college$Accept,15)
+hist(college$Enroll, 25)
+hist(college$Grad.Rate, 5)
+hist(college$Books, 10)
+par(mfrow = c(2,2))
+```
+
+```{r}
+#2.4.9
+Auto=read.csv("Auto.csv",header=T,na.strings="?")
+names(Auto)
+
+```
+a) The quantitative predictors are MPG, accelaration, year, cylinders, horsepower, weight, and displacement. The qualitative predictors are origin and name.
+
+b) The ranges follow below
+```{r}
+range(Auto$mpg)
+range(Auto$cylinders)
+range(Auto$acceleration)
+range(Auto$year)
+range(Auto$horsepower)
+range(Auto$weight)
+range(Auto$displacement)
+```
+c)
+```{r}
+mean(Auto$mpg)
+mean(Auto$cylinders)
+mean(Auto$acceleration)
+mean(Auto$year)
+mean(Auto$horsepower)
+mean(Auto$weight)
+mean(Auto$displacement)
+
+sd(Auto$mpg)
+sd(Auto$cylinders)
+sd(Auto$acceleration)
+sd(Auto$year)
+sd(Auto$horsepower)
+sd(Auto$weight)
+sd(Auto$displacement)
+```
+
+d)
+```{r}
+newAuto <- Auto[10:85,]
+range(newAuto$mpg)
+range(newAuto$cylinders)
+range(newAuto$acceleration)
+range(newAuto$year)
+range(newAuto$horsepower)
+range(newAuto$weight)
+range(newAuto$displacement)
+
+mean(newAuto$mpg)
+mean(newAuto$cylinders)
+mean(newAuto$acceleration)
+mean(newAuto$year)
+mean(newAuto$horsepower)
+mean(newAuto$weight)
+mean(newAuto$displacement)
+
+sd(newAuto$mpg)
+sd(newAuto$cylinders)
+sd(newAuto$acceleration)
+sd(newAuto$year)
+sd(newAuto$horsepower)
+sd(newAuto$weight)
+sd(newAuto$displacement)
+
+```
+
+
+e)
+```{r}
+plot(Auto$acceleration~Auto$mpg)
+plot(Auto$acceleration~Auto$year)
+plot(Auto$acceleration~Auto$horsepower)
+plot(Auto$acceleration~Auto$weight)
+```
+I was curious to see the effects that some of these variables tend to have on acceleration. I found it interesting that there seemed to be a negative relationship of acceleration with respect to horsepower. There also seemed to have a positive relationship of acceleration with respect to horsepower. 
+
+```{r}
+plot(Auto$mpg~Auto$acceleration)
+plot(Auto$mpg~Auto$weight)
+```
+
+f) it does seem that accelaration could have a slightly positive effect on mpg. However, when I used weight to predict accelaration, it showed a strong downward trending plot. Making it seem that there is a strong relationship between mpg and weight of the vehicle. 
+
