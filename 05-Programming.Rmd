@@ -19,7 +19,7 @@ evenly_spaced <- c(min(Galton$height), max(Galton$height), nbins +1)
 ```
 task 3
 ```{r}
-bin_counts <- 
+#bin_counts <- a
 ```
 
 
