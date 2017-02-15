@@ -3,8 +3,14 @@
 Your work goes here ...
 
 
-
+Connor Doak
 ## Test statements
+```{r}
+#myHistogram <- function(plt, lns, plgn){plot(My_bars, type="n"),
+  #lines(My_bars)
+  #polygon(My_bars)}
+```
+
 
 ```{r}
 scoreActivity::score253(6)
