@@ -50,7 +50,7 @@ one_to_five <- function(hist_data) {
   }
   bars
 }
-
+#My_bars <- data.frame(make_one_bar,one_to_five)
 #plot((My_bars, type="n"))
 ```
 
