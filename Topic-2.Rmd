@@ -1,2 +1,192 @@
 # Topic 2 Exercises: Linear Regression
 
+Theory Questions
+1. p66. This is not true, because the variance increases as TV increases, so as the variance is correlated with the error.
+
+2. Once there are more regressers than observations in a model, you cannot find the f statistic because in order to calculate the f you need to find the degrees of freedom which is defined as n-p-1. If p>n, then this would be negative and give a fault F statistic.
+
+3.7.3
+Salary = 50 + 20xGPA + 0.07xIQ + 35(gender 1 = male) + 0.01xGPAXIQ +-10xGenderxmale=1
+a. i is true. because when you keep GPA and IQ consistent, and add the additional 35 for the categorical variable when 1 = male, males earn more. 
+
+b.
+```{r}
+50 + 20*4 + 0.07*110 + 35*0 + 0.01*4*110 +-10*0
+```
+c. It depends on what the t-statistic says for the term. If the t-statistic says that it is significant, we should keep the term. 
+
+3.7.4
+a. We would expect the training RSS to be lower for the cubic regression. Adding the additional squared and cubed valued of the variables adds extra terms to the regression, and each extra term added in reduces the training RSS. 
+
+b. There isn't enough information to tell. Dependng on how the actual function reacts with the test data, we could see lower or higher RSS for either of the regressions. 
+
+c. If the actual relationship is not linear, we would expect the RSS to be smaller for the cubic regression. 
+
+d. There isn't enough information to tell. Even if the actual function is non-linear, we don't know if it follows the same path as the training RSS. 
+
+3.6 
+```{r}
+library(MASS)
+#install.packages("ISLR")
+library(ISLR)
+```
+
+```{r}
+
+names(Boston)
+lm.fit = lm(medv~lstat, data=Boston)
+attach(Boston)
+lm.fit
+summary(lm.fit)
+names(lm.fit)
+coef(lm.fit)
+confint(lm.fit)
+```
+
+```{r}
+predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval ="confidence")
+predict(lm.fit,data.frame(lstat=(c(5,10,15))), interval ="prediction")
+plot(lstat, medv)
+abline(lm.fit)
+abline(lm.fit,lwd=3)
+abline(lm.fit,lwd=3,col="red")
+plot(lstat,medv,col="red")
+plot(lstat,medv,pch=20)
+plot(lstat,medv,pch="+")
+plot(1:20,1:20,pch=1:20)
+par(mfrow=c(2,2))
+plot(lm.fit)
+plot(predict(lm.fit), residuals(lm.fit))
+plot(predict(lm.fit), rstudent(lm.fit))
+plot(hatvalues (lm.fit))
+which.max(hatvalues (lm.fit))
+```
+
+```{r}
+library(ISLR)
+lm.fit = lm(medv~lstat+age,data=Boston)
+summary(lm.fit)
+lm.fit = lm(medv~.,data=Boston)
+summary(lm.fit)
+```
+```{r}
+library(car)
+vif(lm.fit)
+lm.fit1 = lm(medv~.-age,data=Boston)
+summary(lm.fit1)
+```
+```{r}
+summary(lm(medv~lstat*age,data=Boston))
+lm.fit2=lm(medv~lstat+I(lstat^2))
+summary(lm.fit2)
+lm.fit=lm(medv~lstat)
+anova(lm.fit ,lm.fit2)
+par(mfrow=c(2,2))
+plot(lm.fit2)
+
+```
+```{r}
+lm.fit5=lm(medv~poly(lstat ,5))
+summary(lm.fit5)
+summary(lm(medv~log(rm),data=Boston))
+```
+```{r}
+names(Carseats)
+lm.fit=lm(Sales~.+Income:Advertising+Price:Age,data=Carseats)
+summary(lm.fit)
+attach(Carseats)
+contrasts(ShelveLoc)
+```
+
+```{r}
+LoadLibraries=function(){
++ library(ISLR)
++ library(MASS)
++ print (" The libraries have been +
+loaded .")}
+LoadLibraries
+```
+3.7.13
+a.
+```{r}
+set.seed(1)
+x <- rnorm(100)
+#b
+eps <- rnorm(100,0,0.25)
+#c 
+y <- -1 + x*0.5+eps
+length(y)
+```
+
+The length of Y is 100, and the values of B0 and B1 are -1 anf 0.5 respectively
+
+d. 
+```{r}
+plot(x,y)
+```
+There seems to be a linear relationship between x and y. It does not appear to be heteroskastic.
+
+e. 
+```{r}
+reg1 <-lm(y~x)
+summary(reg1)
+```
+
+The betas are very close, but are not exact. This could be due to the variance in the error term. 
+
+f. 
+```{r}
+plot(x,y)
+abline(lm(y~x))
+#legend("line")
+```
+g. 
+```{r}
+reg2 <- lm(y~x+x^2)
+reg2
+anova(reg1,reg2)
+```
+
+The squared term does not improve the model fit. There is not enough evidence to reject Ho
+
+f. 
+```{r}
+set.seed(1)
+x <- rnorm(100)
+#b
+epsless <- rnorm(100,0,0.05)
+#c 
+y2 <- -1 + x*0.5+epsless
+length(y2)
+plot(x,y2)
+reg3 <-lm(y2~x)
+summary(reg3)
+plot(x,y2)
+abline(lm(y2~x))
+```
+The fit is much better now to the data, the error has drastically reduced, which has lead to a much higher adjusted r^2
+
+```{r}
+set.seed(1)
+x <- rnorm(100)
+#b
+epsmore <- rnorm(100,0,0.5)
+#c 
+y3 <- -1 + x*0.5+epsmore
+length(y3)
+plot(x,y3)
+reg4 <-lm(y3~x)
+summary(reg4)
+plot(x,y3)
+abline(lm(y3~x))
+```
+The model now fits the data severely worse since the variance has increased drastically. The adjusted r^2 has dropped significantly, and the data is much more scattered. 
+
+j. 
+```{r}
+confint(reg1)
+confint(reg3)
+confint(reg4)
+```
+
+The results match my expectations. In the regression with the least variance, the confidence interval in the smallest, and the regression with the most variance has the largest 95% confidence interval. 
