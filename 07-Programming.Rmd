@@ -2,9 +2,35 @@
 
 Your work goes here ...
 
-
+Connor Doak
 
 ## Test statements
+```{r}
+vals <- rexp(100, 1/100)
+#vals
+#task 2
+test200 <- dexp(vals, rate = 1/200, log = TRUE)
+#test200
+sum(test200)
+```
+```{r}
+LL_exp <- function(rate){
+  sum(dexp(vals, rate, log = TRUE))
+  }
+LL_exp(1/200)
+rates <- c(1/200:1/50)
+results <- sapply(rates, LL_exp)
+results
+```
+```{r}
+plot(1/rates, results)
+max(1/rates)
+exp_results <- optimize(LL_exp, 
+                        lower=1/200, upper=1/50,
+                        maximum = TRUE)
+exp_results
+```
+
 
 ```{r}
 scoreActivity::score253(7)
