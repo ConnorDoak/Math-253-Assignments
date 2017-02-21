@@ -2,6 +2,38 @@
 
 Your work goes here ...
 
+Connor Doak
+
+Task 1
+1.
+```{r}
+x = runif(100, min = 20, max = 70)
+My_data <- data.frame(x=x, 
+                      y = 5+3*x + 2*rnorm(100))
+plot(My_data)
+#2
+LL_lines <- function(params){
+  m = params[1]
+  b = params[2]
+  sigma = params[3]
+  sum(log(dnorm(My_data$y - (m * My_data$x + b), sd = sigma)))
+}
+#4
+testA <- c(3,5,2)
+testB <- c(4,1,10)
+LL_lines(testA)
+LL_lines(testB)
+#5
+starting_params <- c(4, 1, 10)
+best <- optim(starting_params, LL_lines, control=list(fnscale = -1))
+best
+```
+task 2
+1. 
+```{r}
+load(url("http://tiny.cc/dcf/Taxi_trips.rda"))
+waiting_fare <- Taxi_trips$fare_amount - (Taxi_trips$base_fare + Taxi_trips$per_mile*Taxi_trips$trip_distance)
+```
 
 
 ## Test statements
