@@ -1,6 +1,40 @@
 # In-Class Programming Activity, Day 10
 
 Your work goes here ...
+Connor Doak
+
+```{r}
+library(ISLR)
+logistic <- function(probx) {
+  exp(probx)/(1+exp(probx))
+}
+#logistic(.5)
+
+linear_combine <- function(data, coefs) {
+  result <- 0
+  for (nm in names(coefs)) {
+    if (nm == "intercept") {
+      result <- result + coefs[[nm]]
+    } else {
+      if (!nm %in% names(data)){
+        stop("Wrong")
+      }
+      result <- result + coefs[[nm]] * data[[nm]]
+    }
+  }
+  result
+}
+linear_combine(data=Default, coefs  = c(intercept = 3, balance = 0.00001, income = -0.0002))
+
+LL_logistic <- function(data, coefs, outcome){
+  probs <- logistic(linear_combine(data, coefs))
+  likelihood <- ifelse(outcome == 1, probs, 1-probs)
+  sum(likelihood)
+}
+LL_logistic(data=Default, 
+            coefs = c(intercept = 1, income = -0.0001), 
+            outcome = Default$default == "Yes")
+```
 
 
 
