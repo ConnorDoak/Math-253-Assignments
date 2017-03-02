@@ -1,8 +1,32 @@
 # In-Class Programming Activity, Day 11
 
 Your work goes here ...
+Connor Doak
 
+```{r}
+Sigma <- cbind(c(1,-0.7),c(-0.7, 1))
+Sigma
+Sigma_inv <- solve(Sigma)
+Sigma_inv
+test_inverse <- Sigma %*% Sigma_inv
+test_inverse
+#plot(Sigma, Sigma_inv)
+```
 
+```{r}
+A <- chol(Sigma)
+A
+Aa <- t(A)
+Aa
+Aa %*% A
+```
+
+```{r}
+x1 <- rnorm(10)
+y1 <- rnorm(10)
+x1mat <- cbind(x1)
+y1mat <- cbind(y1)
+```
 
 ## Test statements
 
