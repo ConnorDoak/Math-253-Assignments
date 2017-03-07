@@ -1,6 +1,24 @@
 # In-Class Programming Activity, Day 12
 
 Your work goes here ...
+Connor Doak
+
+```{r}
+n_cases <- 100
+red_mean <- c(1,0)
+green_mean <- c(0, -1)
+blue_mean <- c(-1,1)
+covar_red <- cbind(c(3,-1.7), c(-1.7,1))
+covar_blue <- cbind(c(2,1.5), c(1.5,3))
+One <- cbind(rnorm(n_cases, 0, 1), rnorm(n_cases,0,1))
+Two <- cbind(rnorm(n_cases, 0 ,1),rnorm(n_cases, 0 ,1))
+Three <- cbind(rnorm(n_cases, 0 ,1), rnorm(n_cases, 0 ,1))
+Red <- One %*% chol(covar_red)
+Green <- Two %*% chol(covar_red)
+Blue <- Three %*% chol(covar_blue)
+
+
+```
 
 
 
