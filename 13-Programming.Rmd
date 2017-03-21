@@ -3,6 +3,19 @@
 Your work goes here ...
 
 
+```{r}
+
+k_fold1 <- function(formula, method = lm, data = mtcars,
+                    predfun = predict, k = 10){
+  for (k in sets){
+    sets <- rep(1:k, each = 51/k,
+              length.out = 51)
+  }
+  return(error_estimate)
+}
+
+```
+
 
 ## Test statements
 
