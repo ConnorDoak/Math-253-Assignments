@@ -124,18 +124,59 @@ $(document).ready(function () {
 <p>Your work goes here …</p>
 <pre class="r"><code>k_fold1 &lt;- function(formula, method = lm, data = mtcars,
                     predfun = predict, k = 10){
-  for (k in sets){
-    sets &lt;- rep(1:k, each = 51/k,
-              length.out = 51)
+  sets &lt;- rep(1:k, each = nrow(mtcars)/k,
+              length.out = nrow(mtcars))
+  mspe &lt;- numeric(k)
+  for (j in 1:k) {
+    mspe[j] &lt;-
+      training &lt;- data[sets!=j,]
+      testing &lt;- data[sets==j,]
+      mod &lt;- lm(mpg~hp+wt+am, data = training)      
+      yhat &lt;- predict(mod, newdata = testing)
+      error_estimate &lt;- sum((testing - yhat)^2)
+
   }
+  return(mean(mspe))
   return(error_estimate)
-}</code></pre>
+}
+#k_fold1(formula, method = lm, data = mtcars, predfun = predict, k = 10)</code></pre>
 <div id="test-statements" class="section level2">
 <h2>Test statements</h2>
 <pre class="r"><code>scoreActivity::score253(13)</code></pre>
 <pre><code>## --------
 ## Running test statements for day  13</code></pre>
 <pre><code>## Loading required package: lazyeval</code></pre>
+<pre><code>## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length
+
+## Warning in mspe[j] &lt;- training &lt;- data[sets != j, ]: number of items to
+## replace is not a multiple of replacement length</code></pre>
+<pre><code>## Warning in mean.default(mspe): argument is not numeric or logical:
+## returning NA</code></pre>
 <pre><code>## Warning in results[k] &lt;- paste(&quot;ERROR when running &quot;, deparse(ldots[k][[1]]
 ## $expr)): number of items to replace is not a multiple of replacement length</code></pre>
 <pre><code>## passed: object &quot;k_fold1&quot; exists

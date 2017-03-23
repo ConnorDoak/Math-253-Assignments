@@ -7,13 +7,22 @@ Your work goes here ...
 
 k_fold1 <- function(formula, method = lm, data = mtcars,
                     predfun = predict, k = 10){
-  for (k in sets){
-    sets <- rep(1:k, each = 51/k,
-              length.out = 51)
+  sets <- rep(1:k, each = nrow(mtcars)/k,
+              length.out = nrow(mtcars))
+  mspe <- numeric(k)
+  for (j in 1:k) {
+    mspe[j] <-
+      training <- data[sets!=j,]
+      testing <- data[sets==j,]
+      mod <- lm(mpg~hp+wt+am, data = training)      
+      yhat <- predict(mod, newdata = testing)
+      error_estimate <- sum((testing - yhat)^2)
+
   }
+  return(mean(mspe))
   return(error_estimate)
 }
-
+#k_fold1(formula, method = lm, data = mtcars, predfun = predict, k = 10)
 ```
 
 
