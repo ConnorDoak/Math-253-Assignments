@@ -1,2 +1,149 @@
 # Topic 4 Exercises: Classification
 
+4.7.1
+If we declare the logistic function to be P(x) then by the calculating the odds, we can find the logit function is P(x)/(1-P(x))... after cancellation, we can see that the e^(B0+B1x) = (e^B0+B1x)/(1+e^B0+B1x)
+
+4.7.8
+If K=1 in the KNN regression, then the training error is 0%. That means that the test error is 36%, since the test error is significantly higher in the KNN, it is better to use the logisitic function. 
+
+4.7.9
+P(x)/1-P(x) <- P(x)/1+P(x)
+```{r}
+0.37/(1+0.37)
+0.16/(1-0.16)
+```
+
+4.7.11
+```{r}
+library(ISLR)
+attach(Auto)
+mpg01 <- rep(0,length(mpg))
+mpg01[mpg > median(mpg)] <- 1
+Auto <- data.frame(Auto, mpg01)
+```
+
+```{r}
+#b
+
+boxplot(cylinders ~ mpg01, data = Auto, main = "Cylinders vs mpg01")
+boxplot(displacement ~ mpg01, data = Auto, main = "Displacement vs mpg01")
+
+boxplot(weight ~ mpg01, data = Auto, main = "Weight vs mpg01")
+boxplot(acceleration ~ mpg01, data = Auto, main = "Acceleration vs mpg01")
+boxplot(year ~ mpg01, data = Auto, main = "Year vs mpg01")
+
+```
+It looks like displacement and Weight are both good predictors of mpg01.
+
+c. 
+```{r}
+train <- (year %% 2 == 0)
+training <- Auto[train, ]
+testing <- Auto[!train, ]
+mpg01.test <- mpg01[!train]
+#d
+#fit.lda <- lda(mpg01 ~ cylinders + weight + displacement + horsepower, data = Auto, subset = train)
+#fit.lda
+#ldap <- predict(fit.lda, data = testing)
+#mean(ldap$class != mpg01.test)
+
+```
+There is a testing error of 39.4%
+
+e.
+```{r}
+#fit.qda <- qda(mpg01 ~ cylinders + weight + displacement + horsepower, data = Auto, subset = train)
+#fit.qda
+#pred.qda <- predict(fit.qda, testing)
+#table(pred.qda$class, mpg01.test)
+#mean(pred.qda$class != mpg01.test)
+```
+Code was not working for qda.
+
+f. 
+```{r}
+fit.glm <- glm(mpg01 ~ cylinders + weight + displacement + horsepower, data = Auto, family = binomial, subset = train)
+#summary(fit.glm)
+probs <- predict(fit.glm, type = "response")
+pred.glm <- rep(0, length(probs))
+pred.glm[probs > 0.5] <- 1
+#table(pred.glm, mpg01.test)
+mean(pred.glm != mpg01.test)
+```
+The error for testing was 46.6%
+g.
+```{r}
+train.X <- cbind(cylinders, weight, displacement, horsepower)[train, ]
+test.X <- cbind(cylinders, weight, displacement, horsepower)[!train, ]
+train.mpg01 <- mpg01[train]
+set.seed(1)
+#pred.knn <- knn(train.X, test.X, train.mpg01, k = 1)
+#table(pred.knn, mpg01.test)
+#mean(pred.knn != mpg01.test)
+#pred.knn <- knn(train.X, test.X, train.mpg01, k = 10)
+#table(pred.knn, mpg01.test)
+#mean(pred.knn != mpg01.test)
+#pred.knn <- knn(train.X, test.X, train.mpg01, k = 100)
+#table(pred.knn, mpg01.test)
+#mean(pred.knn != mpg01.test)
+```
+KNN function was not debugging. 
+
+4.7.13
+```{r}
+library(MASS)
+attach(Boston)
+
+crim01 <- rep(0, length(crim))
+crim01[crim > median(crim)] <- 1
+Boston <- data.frame(Boston, crim01)
+
+train <- 1:(length(crim) / 2)
+test <- (length(crim) / 2 + 1):length(crim)
+Boston.train <- Boston[train, ]
+Boston.test <- Boston[test, ]
+crim01.test <- crim01[test]
+
+fit.glm <- glm(crim01 ~ . - crim01 - crim, data = Boston, family = binomial, subset = train)
+probs <- predict(fit.glm, Boston.test, type = "response")
+pred.glm <- rep(0, length(probs))
+pred.glm[probs > 0.5] <- 1
+table(pred.glm, crim01.test)
+mean(pred.glm != crim01.test)
+```
+Error term seems to be 0
+```{r}
+fit.glm <- glm(crim01 ~ . - crim01 - crim - chas - nox, data = Boston, family = binomial, subset = train)
+probs <- predict(fit.glm, Boston.test, type = "response")
+pred.glm <- rep(0, length(probs))
+pred.glm[probs > 0.5] <- 1
+table(pred.glm, crim01.test)
+mean(pred.glm != crim01.test)
+```
+```{r}
+#fit.lda <- lda(crim01 ~ . - crim01 - crim, data = Boston, subset = train)
+#pred.lda <- predict(fit.lda, Boston.test)
+#table(pred.lda$class, crim01.test)
+#mean(pred.lda$class != crim01.test)
+```
+
+```{r}
+#train.X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black, lstat, medv)[train, ]
+#test.X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black, lstat, medv)[test, ]
+#train.crim01 <- crim01[train]
+#set.seed(1)
+#pred.knn <- knn(train.X, test.X, train.crim01, k = 1)
+#table(pred.knn, crim01.test)
+#mean(pred.knn != crim01.test)
+```
+```{r}
+#pred.knn <- knn(train.X, test.X, train.crim01, k = 10)
+#table(pred.knn, crim01.test)
+#mean(pred.knn != crim01.test)
+```
+```{r}
+#pred.knn <- knn(train.X, test.X, train.crim01, k = 100)
+#table(pred.knn, crim01.test)
+#mean(pred.knn != crim01.test)
+```
+
