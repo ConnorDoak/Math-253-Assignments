@@ -1,6 +1,18 @@
 # In-Class Programming Activity, Day 14
 
 Your work goes here ...
+Connor Doak
+
+```{r}
+library(glmnet)
+GenCont <- read.csv("http://tiny.cc/dcf/GenCont.csv")
+inds <- sample(1:nrow(GenCont), size = nrow(GenCont)/2)
+Train <- GenCont[inds,]
+Test <- GenCont[-inds,]
+compare_ols_ridge <- function(responses, predictors, lambda = 1){
+  mod1 <- lm(response ~ predictors, data = Train)
+}
+```
 
 
 
