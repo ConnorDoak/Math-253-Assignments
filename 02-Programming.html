@@ -142,19 +142,30 @@ Auto=read.csv(&quot;/home/local/MAC/jdoak/Math-253-Assignments-Git/Auto.csv&quot
 ##   1   6   2   7   2   1   4   6   9   5   2  19   1  20   1   6   1   1 
 ##  95  96  97  98 
 ##  14   3   9   2</code></pre>
+<pre class="r"><code>library(ISLR)</code></pre>
+<pre><code>## 
+## Attaching package: 'ISLR'</code></pre>
+<pre><code>## The following object is masked _by_ '.GlobalEnv':
+## 
+##     Auto</code></pre>
+<pre class="r"><code>#task5
+task5top &lt;- Auto[nrow(1:5),ncol(1:3)]
+task5bottom &lt;- Auto[nrow(-5), ncol(-3)]</code></pre>
 <pre class="r"><code>scoreActivity::score253(2)</code></pre>
 <pre><code>## --------
 ## Running test statements for day  02</code></pre>
 <pre><code>## Loading required package: scoreActivity</code></pre>
 <pre><code>## Loading required package: lazyeval</code></pre>
+<pre><code>## Warning in is.na(e1): is.na() applied to non-(list or vector) of type
+## 'NULL'</code></pre>
 <pre><code>## passed: object &quot;Auto&quot; exists
 ## passed: is.character(auto_file_name)
 ## FAILED: object &quot;task3&quot; doesn't exist.
-## FAILED: &quot;package:ISLR&quot; %in% search()
-## ERROR when running  check(5, nrow(task5top))
-## ERROR when running  check(3, ncol(task5top))
-## ERROR when running  check(5, nrow(task5bottom))
-## ERROR when running  check(3, ncol(task5bottom))
+## passed: &quot;package:ISLR&quot; %in% search()
+## FAILED: nrow(task5top)
+## FAILED: ncol(task5top)
+## FAILED: nrow(task5bottom)
+## FAILED: ncol(task5bottom)
 ## ERROR when running  check(TRUE, task5top[5, 3] == Auto[5, 3])
 ## ERROR when running  check(TRUE, task5bottom[5, 3] == Auto[nrow(Auto), ncol(Auto)])</code></pre>
 </div>
