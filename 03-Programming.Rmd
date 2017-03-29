@@ -7,14 +7,34 @@ Connor Doak
 ## Test statements
 
 ```{r}
-
 data(College, package = "ISLR")
 
 #Task 2
-yield <- College["Enroll"]/College["Accept"]
+Yield <- College["Enroll"]/College["Accept"]
 
 #Task 3
+nrow(College)
+traincollege <- College[sample(nrow(College), nrow(College)/2),]
+testcollege <- College[sample(nrow(College), nrow(College)/2),]
 all_indices <-1:nrow(College)
+train_indices <- College[sample(nrow(College), 200),]
+test_indices <- College[sample(nrow(College), nrow(College) - 200),]
+Train_data <- data.frame(train_indices)
+Test_data <- data.frame(test_indices)
+Train_data[, "Yield"] <- Train_data
+Test_data[, "Yield"] <- Test_data
+
+Yield_mod1 <- lm(Yield ~ Top10perc + Outstate + Expend,
+                 data=Train_data)
+Y_train <- Train_data$yield
+fhat_train <- predict(Yield_mod1, newdata = Train_data)
+MSE_train <- (Y_train - fhat_train)^2
+Y_test <- Test_data$yield
+fhat_test <- predict(Yield_mod1, newdata = Test_data)
+MSE_test <- (Y_test - fhat_test)^2
+Ratio <- MSE_train/MSE_test
+
+
 ```
 
 
