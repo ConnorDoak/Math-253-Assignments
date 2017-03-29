@@ -15,17 +15,56 @@ test1 <- sample(poker_deck, 5, replace = FALSE)
 #suits(test1)
 #ranks(test1)
 
+#5
 is_flush <- function(cards) {
   length(unique(suits(cards))) == 1
 }
 
+#6
 is_straight <- function(cards){
   all(diff(sort(ranks(cards))) == 1)
 }
+#2
 is_straight_flush <- function(cards){
   is_flush(cards) && is_straight(cards)
 }
-is_straight_flush(test1)
+#9
+is_pair <- function(cards) {
+  any(diff(sort(ranks(cards))) == 0)
+}
+#8
+is_two_pair <- function(cards) {
+  length(sort(diff(sort(ranks(cards))) == 0) == 0) == 1
+}
+#7
+is_three_of_a_kind <- function(cards) {
+  any(diff(sort((diff(sort(ranks(cards))) == 0)) == 0))
+}
+#4
+is_full_house <- function(cards) {
+  is_two_pair(cards) && is_three_of_a_kind(cards)
+}
+#1
+is_royal_flush <- function(cards) {
+  is_flush(cards) && all(diff(sort(min(ranks(cards)) >9) == 1))
+}
+#3
+is_four_of_a_kind <- function(cards) {
+  any(diff(sort(diff(sort((diff(sort(ranks(cards))) == 0)) == 0))==0))
+}
+is_four_of_a_kind(test1)
+test1
+
+```
+```{r}
+#before_draw <- function(cards) {
+  #if (is_full_house(cards) == TRUE){"full house"}
+    #else (is_flush(cards)== TRUE){"Flush"}
+    #else (is_four_of_a_kind(cards)==TRUE){"Four of a kind"}
+    #else (is_pair(cards) == TRUE){"Pair"}
+  
+#}
+#table(sapply(1:10000, FUN=before_draw))
 ```
 
 ## Test statements

@@ -133,18 +133,55 @@ test1 &lt;- sample(poker_deck, 5, replace = FALSE)
 #suits(test1)
 #ranks(test1)
 
+#5
 is_flush &lt;- function(cards) {
   length(unique(suits(cards))) == 1
 }
 
+#6
 is_straight &lt;- function(cards){
   all(diff(sort(ranks(cards))) == 1)
 }
+#2
 is_straight_flush &lt;- function(cards){
   is_flush(cards) &amp;&amp; is_straight(cards)
 }
-is_straight_flush(test1)</code></pre>
+#9
+is_pair &lt;- function(cards) {
+  any(diff(sort(ranks(cards))) == 0)
+}
+#8
+is_two_pair &lt;- function(cards) {
+  length(sort(diff(sort(ranks(cards))) == 0) == 0) == 1
+}
+#7
+is_three_of_a_kind &lt;- function(cards) {
+  any(diff(sort((diff(sort(ranks(cards))) == 0)) == 0))
+}
+#4
+is_full_house &lt;- function(cards) {
+  is_two_pair(cards) &amp;&amp; is_three_of_a_kind(cards)
+}
+#1
+is_royal_flush &lt;- function(cards) {
+  is_flush(cards) &amp;&amp; all(diff(sort(min(ranks(cards)) &gt;9) == 1))
+}
+#3
+is_four_of_a_kind &lt;- function(cards) {
+  any(diff(sort(diff(sort((diff(sort(ranks(cards))) == 0)) == 0))==0))
+}
+is_four_of_a_kind(test1)</code></pre>
 <pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>test1</code></pre>
+<pre><code>## [1] 123  54 113  41 141</code></pre>
+<pre class="r"><code>#before_draw &lt;- function(cards) {
+  #if (is_full_house(cards) == TRUE){&quot;full house&quot;}
+    #else (is_flush(cards)== TRUE){&quot;Flush&quot;}
+    #else (is_four_of_a_kind(cards)==TRUE){&quot;Four of a kind&quot;}
+    #else (is_pair(cards) == TRUE){&quot;Pair&quot;}
+  
+#}
+#table(sapply(1:10000, FUN=before_draw))</code></pre>
 <div id="test-statements" class="section level2">
 <h2>Test statements</h2>
 <pre class="r"><code>scoreActivity::score253(9)</code></pre>
@@ -154,11 +191,11 @@ is_straight_flush(test1)</code></pre>
 <pre><code>## Loading required package: lazyeval</code></pre>
 <pre><code>## passed: is.function(ranks)
 ## passed: is.function(suits)
-## ERROR when running  check(TRUE, is_pair(c(21, 22, 33, 41, 52)))
-## ERROR when running  check(FALSE, is_pair(c(21, 31, 41, 51, 62)))
+## passed: is_pair(c(21, 22, 33, 41, 52))
+## passed: is_pair(c(21, 31, 41, 51, 62))
 ## passed: is_flush(c(21, 31, 41, 51, 71))
-## ERROR when running  check(TRUE, is_full_house(c(21, 22, 31, 32, 33)))
-## ERROR when running  check(FALSE, is_full_house(c(21, 22, 31, 32, 42)))
+## FAILED: is_full_house(c(21, 22, 31, 32, 33))
+## passed: is_full_house(c(21, 22, 31, 32, 42))
 ## passed: is_straight(c(21, 31, 42, 52, 62))
 ## passed: is_straight_flush(c(21, 31, 42, 52, 62))
 ## passed: is_straight_flush(c(21, 31, 41, 51, 61))</code></pre>
