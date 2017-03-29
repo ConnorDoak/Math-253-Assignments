@@ -5,6 +5,24 @@ Your work goes here ...
 Content
 ```{r}
 library("mosaicData", lib.loc="~/R/library")
+
+task2 <- "Today is Sep 20 07:15:57 2016"
+paste(task2)
+task3a <- names(Galton)
+task3b <- nrow(Galton)
+data(Galton)
+task3c <- mean(Galton[,"height"])
+task4 <- cbind(c(1,4),c(2,5), c(3,6))
+task4
+
+```
+
+```{r}
+task5x <- runif(1000)
+task5y <- runif(1000)
+task5pi <- sqrt(task5x^2 +task5y^2)
+task5pi2 <- task5pi <= 1
+task5pi2
 ```
 
 ## Test statements
