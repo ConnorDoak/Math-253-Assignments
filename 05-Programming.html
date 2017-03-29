@@ -161,7 +161,7 @@ hist_basics</code></pre>
               x = c(xLeft,  xLeft,  xRight, xRight, NA),
               y = c(    0, height,  height,      0, NA)
   )
-  res
+  return(res)
 }
 one_to_five &lt;- function(hist_data) {
   bars &lt;- NULL
@@ -169,10 +169,13 @@ one_to_five &lt;- function(hist_data) {
     new_bar &lt;- make_one_bar(hist_data[k, ])
     bars &lt;- rbind(bars, new_bar)
   }
-  bars
+  return(bars)
 }
-#My_bars &lt;- data.frame(make_one_bar,one_to_five)
-#plot((My_bars, type=&quot;n&quot;))</code></pre>
+
+My_bars &lt;- data.frame(cbind(one_to_five,make_one_bar))
+#plot(My_bars, type = &quot;n&quot;)
+#lines(My_bars)
+#polygon(My_bars)</code></pre>
 <pre class="r"><code>scoreActivity::score253(5)</code></pre>
 <pre><code>## --------
 ## Running test statements for day  05</code></pre>

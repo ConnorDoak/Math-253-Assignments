@@ -40,7 +40,7 @@ make_one_bar <- function(point) {
               x = c(xLeft,  xLeft,  xRight, xRight, NA),
               y = c(    0, height,  height,      0, NA)
   )
-  res
+  return(res)
 }
 one_to_five <- function(hist_data) {
   bars <- NULL
@@ -48,10 +48,13 @@ one_to_five <- function(hist_data) {
     new_bar <- make_one_bar(hist_data[k, ])
     bars <- rbind(bars, new_bar)
   }
-  bars
+  return(bars)
 }
-#My_bars <- data.frame(make_one_bar,one_to_five)
-#plot((My_bars, type="n"))
+
+My_bars <- data.frame(cbind(one_to_five,make_one_bar))
+#plot(My_bars, type = "n")
+#lines(My_bars)
+#polygon(My_bars)
 ```
 
 
