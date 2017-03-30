@@ -26,6 +26,28 @@ x1 <- rnorm(10)
 y1 <- rnorm(10)
 x1mat <- cbind(x1)
 y1mat <- cbind(y1)
+x <- cbind(x1mat, y1mat)
+w1 <- rnorm(10000)
+w2 <- rnorm(10000)
+w1mat <- cbind(w1)
+w2mat <- cbind(w2)
+w <- cbind(w1mat, w2mat)
+W_cov <- cov(w)
+
+```
+
+```{r}
+matrixA_inv <- chol(W_cov)
+y <- x%*%A
+ycov <- cov(y)
+y <- w %*% A
+ycovprime <- cov(y)
+ycovprime
+Sigma
+1/sqrt(10000)
+ycol1 <- y[,1]
+ycol2 <- y[,2]
+plot(ycol1, ycol2)
 ```
 
 ## Test statements
