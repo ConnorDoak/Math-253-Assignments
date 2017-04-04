@@ -2,6 +2,14 @@
 
 Your work goes here ...
 
+```{r}
+load("mona.rda")
+X <- t(mona) - mean(mona[])
+X_rand <- rnorm(ncol(X))
+X_corr <- X_rand*chol(var(X))
+b <- rep(0,175)
+#beta <- cbind(b,sample(1:191))
+```
 
 
 ## Test statements
