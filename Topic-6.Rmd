@@ -1,2 +1,76 @@
 # Topic 6 Exercises: Selecting Model Terms
 
+6.8.1
+a.
+The model with the smallest RSS would be the best subset model with k predictors. The introduction of each new variable will decrease the RSS so having a model within the best subset that has all the predictors will have the lowest RSS. 
+
+b.
+It depends. Since the testing data is different than the training data, there is no way to tell which exact model will have the lowest RSS. 
+
+c. 
+i. True - having k variables can become k+1 with forward selection
+ii. True - removing one predictor with backward selection gives k variables
+iii. False - there is no link between forward and backward selection
+iv.  False - there is no link between forward and backward selection
+v. True - if k variables were selected using best subset, then you must be able to have the same subset in k+1
+
+6.8.2
+a. The lasso is lesss flexible and will give improved prediction accuracy when its increase in bias is less than its decrease in variance. 
+
+b. ridge regression is lesss flexible and will give improved prediction accuracy when its increase in bias is less than its decrease in variance
+
+c. Non-linear methods are more flexible and will give improved prediction accuracy when their increase in variance are less than their decrease in bias.
+
+6.8.9
+```{r}
+#a
+library(ISLR)
+library(glmnet)
+data(College)
+set.seed(11)
+train = sample(1:dim(College)[1], dim(College)[1] / 2)
+test <- -train
+Collegetrain <- College[train, ]
+Collegetest <- College[test, ]
+#b
+fit.lm <- lm(Apps ~ ., data = Collegetrain)
+pred.lm <- predict(fit.lm, Collegetest)
+mean((pred.lm - Collegetest$Apps)^2)
+```
+
+```{r}
+#c
+train.mat <- model.matrix(Apps ~ ., data = Collegetrain)
+test.mat <- model.matrix(Apps ~ ., data = Collegetest)
+grid <- 10 ^ seq(4, -2, length = 100)
+fit.ridge <- glmnet(train.mat, Collegetrain$Apps, alpha = 0, lambda = grid, thresh = 1e-12)
+cv.ridge <- cv.glmnet(train.mat, Collegetrain$Apps, alpha = 0, lambda = grid, thresh = 1e-12)
+bestlam.ridge <- cv.ridge$lambda.min
+bestlam.ridge
+pred.ridge <- predict(fit.ridge, s = bestlam.ridge, newx = test.mat)
+mean((pred.ridge - Collegetest$Apps)^2)
+```
+```{r}
+#d
+fit.lasso <- glmnet(train.mat, Collegetrain$Apps, alpha = 1, lambda = grid, thresh = 1e-12)
+cv.lasso <- cv.glmnet(train.mat, Collegetrain$Apps, alpha = 1, lambda = grid, thresh = 1e-12)
+bestlam.lasso <- cv.lasso$lambda.min
+bestlam.lasso
+pred.lasso <- predict(fit.lasso, s = bestlam.lasso, newx = test.mat)
+mean((pred.lasso - Collegetest$Apps)^2)
+predict(fit.lasso, s = bestlam.lasso, type = "coefficients")
+```
+e. My R does not have the pls package to upload.
+f. See above
+```{r}
+#g
+test.avg <- mean(Collegetest$Apps)
+lm.r2 <- 1 - mean((pred.lm - Collegetest$Apps)^2) / mean((test.avg - Collegetest$Apps)^2)
+ridge.r2 <- 1 - mean((pred.ridge - Collegetest$Apps)^2) / mean((test.avg - Collegetest$Apps)^2)
+lasso.r2 <- 1 - mean((pred.lasso - Collegetest$Apps)^2) / mean((test.avg - Collegetest$Apps)^2)
+lm.r2
+ridge.r2
+lasso.r2
+```
+The three models that worked for me all predict college applications with good accuracy. 
+
