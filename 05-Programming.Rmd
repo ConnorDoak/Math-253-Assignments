@@ -51,10 +51,10 @@ one_to_five <- function(hist_data) {
   return(bars)
 }
 
-My_bars <- data.frame(cbind(one_to_five,make_one_bar))
-#plot(My_bars, type = "n")
-#lines(My_bars)
-#polygon(My_bars)
+My_bars <- one_to_five(hist_basics)
+plot(My_bars, type = "n")
+lines(My_bars)
+polygon(My_bars)
 ```
 
 
