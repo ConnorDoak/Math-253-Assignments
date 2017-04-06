@@ -16,10 +16,26 @@ Three <- cbind(rnorm(n_cases, 0 ,1), rnorm(n_cases, 0 ,1))
 Red <- One %*% chol(covar_red)
 Green <- Two %*% chol(covar_red)
 Blue <- Three %*% chol(covar_blue)
-
+red_mean <- mean(Red)
+green_mean <- mean(Green)
+blue_mean <- mean(Blue)
+Red1 <- Red + red_mean
+Green1 <- Green + green_mean
+Blue1 <- Blue + blue_mean
+a <- data.frame(Red1)
+b <- data.frame(Blue1)
+c <- data.frame(Green1)
+Same_sigma <- rbind(Red1, Green1)
+Different_sigma <- rbind(Red1, Blue1)
 
 ```
 
+```{r}
+library(MASS)
+#mod_LDA_one <- lda(class ~ x + y, data = Same_sigma)
+#test_LDA_one <- predict(mod_LDA_one, newdata = Same_sigma)
+#table(Same_sigma$class, test_LDA_one$class)
+```
 
 
 ## Test statements

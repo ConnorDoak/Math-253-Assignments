@@ -133,7 +133,22 @@ Two &lt;- cbind(rnorm(n_cases, 0 ,1),rnorm(n_cases, 0 ,1))
 Three &lt;- cbind(rnorm(n_cases, 0 ,1), rnorm(n_cases, 0 ,1))
 Red &lt;- One %*% chol(covar_red)
 Green &lt;- Two %*% chol(covar_red)
-Blue &lt;- Three %*% chol(covar_blue)</code></pre>
+Blue &lt;- Three %*% chol(covar_blue)
+red_mean &lt;- mean(Red)
+green_mean &lt;- mean(Green)
+blue_mean &lt;- mean(Blue)
+Red1 &lt;- Red + red_mean
+Green1 &lt;- Green + green_mean
+Blue1 &lt;- Blue + blue_mean
+a &lt;- data.frame(Red1)
+b &lt;- data.frame(Blue1)
+c &lt;- data.frame(Green1)
+Same_sigma &lt;- rbind(Red1, Green1)
+Different_sigma &lt;- rbind(Red1, Blue1)</code></pre>
+<pre class="r"><code>library(MASS)
+#mod_LDA_one &lt;- lda(class ~ x + y, data = Same_sigma)
+#test_LDA_one &lt;- predict(mod_LDA_one, newdata = Same_sigma)
+#table(Same_sigma$class, test_LDA_one$class)</code></pre>
 <div id="test-statements" class="section level2">
 <h2>Test statements</h2>
 <pre class="r"><code>scoreActivity::score253(12)</code></pre>
@@ -144,7 +159,7 @@ Blue &lt;- Three %*% chol(covar_blue)</code></pre>
 ## passed: object &quot;Green&quot; exists
 ## passed: object &quot;Blue&quot; exists
 ## passed: all(names(Red) %in% c(&quot;x&quot;, &quot;y&quot;, &quot;class&quot;))
-## FAILED: all(abs(apply(Red[, c(1, 2)], FUN = mean, MARGIN = 2) - red_mean) &lt; 
+## passed: all(abs(apply(Red[, c(1, 2)], FUN = mean, MARGIN = 2) - red_mean) &lt; 
 ##     0.5)
 ## ERROR when running  check(TRUE, all(table(Same_sigma$class) == c(n_cases, n_cases)))
 ## FAILED: object &quot;mod_LDA_one&quot; doesn't exist.
