@@ -5,7 +5,7 @@ Your work goes here ...
 
 ```{r}
 
-k_fold1 <- function(formula, method = lm, data = mtcars,
+k_fold1 <- function(formula, method, data = mtcars,
                     predfun = predict, k = 10){
   sets <- rep(1:k, each = nrow(mtcars)/k,
               length.out = nrow(mtcars))
@@ -14,8 +14,8 @@ k_fold1 <- function(formula, method = lm, data = mtcars,
     mspe[j] <-
       training <- data[sets!=j,]
       testing <- data[sets==j,]
-      mod <- lm(mpg~hp+wt+am, data = training)      
-      yhat <- predict(mod, newdata = testing)
+      mod <- method(mpg~hp+wt+am, data = training)      
+      yhat <- predfun(mod, newdata = testing)
       error_estimate <- sum((testing - yhat)^2)
 
   }
