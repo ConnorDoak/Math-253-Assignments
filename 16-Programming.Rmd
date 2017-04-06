@@ -1,6 +1,25 @@
 # In-Class Programming Activity, Day 16
 
 Your work goes here ...
+Connor Doak
+
+```{r}
+my_knots <- function(x,k){
+  evenly_spaced <- (1:k)/(k+1)
+  knots <- quantile(x, probs=evenly_spaced)
+  return(knots)
+  
+}
+
+#my_knots(rnorm(10000), 5)
+#MM <- cbind(1, x, x^2, x^3)
+
+#for (i in my_knots){
+  #new_vector <- x-my_knots(x,k)^3
+  
+#}
+#MM <- cbind(MM, new_vector)
+```
 
 
 
