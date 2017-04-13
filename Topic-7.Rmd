@@ -1,2 +1,56 @@
 # Topic 7 Exercises: Nonlinear regression
 
+7.9.3
+Sketch drawn in notebook (Linearly increasing with different slopes until x = 1, then decreases)
+
+4. 
+Sketch drawn in notebook (response value is 1 for x values of -2, -1, and 2, and response value is 2 for x values of 0 and 1)
+
+5.
+a) the g2 will have the smaller training RSS because it has the 4th degree polynomial, it adds more flexbility which reduces the training RSS
+
+b) g1 will have the smaller test RSS because the added flexibility in g2 will cause overfitting, thus force g2 to have the larger test RSS
+
+c) if lambda = 0, then the smoothing penalty will not be in effect for either regression, thus the equations are the same and will have the same training and testing RSS
+
+11.
+```{r}
+set.seed(1)
+X1 <- rnorm(100)
+X2 <- rnorm(100)
+Y <- rnorm(100)
+beta0 = rep(NA, 1000)
+beta1 = rep(NA, 1000)
+beta2 = rep(NA, 1000)
+beta1[1] = 10
+
+for (i in 1:1000) {
+    a = Y - beta1[i] * X1
+    beta2[i] = lm(a ~ X2)$coef[2]
+    a = Y - beta2[i] * X2
+    lm.fit = lm(a ~ X1)
+    if (i < 1000) {
+        beta1[i + 1] = lm.fit$coef[2]
+    }
+    beta0[i] = lm.fit$coef[1]
+}
+plot(1:1000, beta0, type = "l", xlab = "iteration", ylab = "betas", ylim = c(-2.2, 
+    1.6), col = "green")
+lines(1:1000, beta1, col = "red")
+lines(1:1000, beta2, col = "blue")
+legend("center", c("beta0", "beta1", "beta2"), lty = 1, col = c("green", "red", 
+    "blue"))
+
+lm.fit = lm(Y ~ X1 + X2)
+plot(1:1000, beta0, type = "l", xlab = "iteration", ylab = "betas", ylim = c(-2.2, 
+    1.6), col = "green")
+lines(1:1000, beta1, col = "red")
+lines(1:1000, beta2, col = "blue")
+abline(h = lm.fit$coef[1], lty = "dashed", lwd = 3, col = rgb(0, 0, 0, alpha = 0.4))
+abline(h = lm.fit$coef[2], lty = "dashed", lwd = 3, col = rgb(0, 0, 0, alpha = 0.4))
+abline(h = lm.fit$coef[3], lty = "dashed", lwd = 3, col = rgb(0, 0, 0, alpha = 0.4))
+legend("center", c("beta0", "beta1", "beta2", "multiple regression"), lty = c(1, 
+    1, 1, 2), col = c("green", "red", "blue", "black"))
+
+```
+g. If the relationship between y and X's are linear, one interation is sufficient enough. 
