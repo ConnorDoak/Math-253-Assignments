@@ -1,2 +1,28 @@
 # Topic 8 Exercises: Tree-based models
 
+8.4.1
+Drawn in my notebook
+
+8.4.2
+It has to continually add the same stumps to reduce the RSS
+
+8.4.3
+```{r}
+p <- seq(0, 1, 0.01)
+giniindex <- 2 * p * (1 - p)
+classerror <- 1 - pmax(p, 1 - p)
+crossentropy <- - (p * log(p) + (1 - p) * log(1 - p))
+matplot(p, cbind(giniindex, classerror, crossentropy), col = c("red", "green", "blue"))
+```
+
+
+8.4.4
+Done in notebook
+
+8.4.5
+Using the majority vote, the classification is red because red occurs more. Using average probability, the classification is green because the average probability is 0.45
+
+8.4.12
+Could not find R packages to run the tree regressions. The packages from the example in the textbook were not available in R. 
+
+
